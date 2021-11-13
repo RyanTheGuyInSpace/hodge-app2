@@ -1,0 +1,24 @@
+@startuml
+
+class InventoryManager {
+
+    +loadInventory();
+}
+
+class Inventory {
+    -ObservableList<InventoryItem> inventoryItems;
+
+    +save();
+
+}
+
+class InventoryItem {
+    -String serialNumber;
+    -String name;
+    -BigDecimal value;
+
+
+
+}
+
+@enduml
