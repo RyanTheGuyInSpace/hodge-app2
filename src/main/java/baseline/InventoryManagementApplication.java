@@ -24,7 +24,7 @@ public class InventoryManagementApplication extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("InventoryManager.fxml"));
 
-        Scene scene = new Scene(root, 1200, 600);
+        Scene scene = new Scene(root, 800, 600);
 
         primaryStage.setScene(scene);
 
