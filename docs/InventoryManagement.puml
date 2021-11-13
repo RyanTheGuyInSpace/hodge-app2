@@ -7,10 +7,16 @@ class InventoryManager {
 }
 
 class Inventory {
+    -String path;
     -ObservableList<InventoryItem> inventoryItems;
 
     +save();
-
+    +saveAsHtml(String path);
+    +saveAsTsv(String path);
+    +saveAsJson(String path);
+    +addItem(InventoryItem item);
+    +deleteItem(InventoryItem item);
+    +deleteAllItems();
 }
 
 class InventoryItem {
@@ -18,8 +24,12 @@ class InventoryItem {
     -String name;
     -BigDecimal value;
 
-
-
+    +getSerialNumber();
+    +setSerialNumber(String serialNumber);
+    +getName();
+    +setName(String name);
+    +getValue();
+    +setValue(BigDecimal value);
 }
 
 @enduml
