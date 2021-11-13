@@ -5,6 +5,8 @@
 
 package baseline;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,8 +18,7 @@ import java.util.ResourceBundle;
 
 public class InventoryManagerController implements Initializable {
 
-    @FXML
-    public Label noInventoryLabel;
+    ObservableList<InventoryItem> items = FXCollections.observableArrayList();
 
     @FXML
     public AnchorPane mainPane;
@@ -27,7 +28,7 @@ public class InventoryManagerController implements Initializable {
 
     @FXML
     public Menu fileMenu;
-    
+
     @FXML
     public MenuItem newInventoryButton;
 
