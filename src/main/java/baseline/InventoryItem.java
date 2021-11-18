@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class InventoryItem {
     private String name;
-    private BigDecimal value;
+    private float value;
     private String serialNumber;
 
     /**
@@ -32,7 +32,7 @@ public class InventoryItem {
      * Gets the value of the InventoryItem.
      * @return The value of the InventoryItem.
      */
-    public BigDecimal getValue() {
+    public float getValue() {
         return this.value;
     }
 
@@ -40,7 +40,7 @@ public class InventoryItem {
      * Sets the value of the InventoryItem.
      * @param value The new value to set for the InventoryItem.
      */
-    private void setValue(BigDecimal value) {
+    private void setValue(float value) {
         this.value = value;
     }
 
@@ -66,8 +66,13 @@ public class InventoryItem {
      * @return True if successful, false otherwise
      */
     public boolean editName(String name) {
+        if (name.length() < 2 || name.length() > 256) {
+            return false;
+        }
 
-        return false;
+        this.name = name;
+
+        return true;
     }
 
     /**
@@ -75,9 +80,14 @@ public class InventoryItem {
      * @param value The new value to set for the InventoryItem.
      * @return True if successful, false otherwise
      */
-    public boolean editValue(BigDecimal value) {
+    public boolean editValue(float value) {
+        if (value < 0) {
+            return false;
+        }
 
-        return false;
+        this.value = value;
+
+        return true;
     }
 
     /**
@@ -86,6 +96,12 @@ public class InventoryItem {
      * @return True if successful, false otherwise
      */
     public boolean editSerialNumber(String serialNumber) {
+
+        /*
+         * TODO use regex to verify correct serial number format. This method shouldn't need to be moved
+         * since we can cancel the operation and show a popup from the controller if this returns false
+         */
+        this.setSerialNumber(serialNumber);
 
         return false;
     }
