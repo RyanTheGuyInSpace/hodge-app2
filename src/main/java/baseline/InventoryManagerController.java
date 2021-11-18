@@ -177,6 +177,10 @@ public class InventoryManagerController implements Initializable {
         window.showAndWait();
     }
 
+    public void deleteAllItems() {
+        items.clear();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

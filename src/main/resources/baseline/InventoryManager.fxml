@@ -25,7 +25,7 @@
                   <MenuItem fx:id="addItemButton" mnemonicParsing="false" onAction="#addItem" text="Add Item" />
                   <MenuItem fx:id="editItemButton" mnemonicParsing="false" text="Edit Item" />
               <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" text="Delete Item" />
-                  <MenuItem fx:id="deleteAllItemsButton" mnemonicParsing="false" text="Delete All Items" />
+                  <MenuItem fx:id="deleteAllItemsButton" mnemonicParsing="false" onAction="#deleteAllItems" text="Delete All Items" />
             </items>
           </Menu>
         </menus>
@@ -40,8 +40,8 @@
             <TableColumn fx:id="nameColumn" prefWidth="368.0" text="Name" />
         </columns>
       </TableView>
-      <TextField fx:id="serialNumberAddField" layoutX="2.0" layoutY="30.0" prefHeight="26.0" prefWidth="126.0" promptText="Serial Number..." />
-      <TextField fx:id="valueAddField" layoutX="134.0" layoutY="30.0" prefHeight="26.0" prefWidth="94.0" promptText="Value..." />
+      <TextField fx:id="serialNumberAddField" layoutX="2.0" layoutY="30.0" prefHeight="26.0" prefWidth="126.0" promptText="A-XXX-XXX-XXX" />
+      <TextField fx:id="valueAddField" layoutX="134.0" layoutY="30.0" prefHeight="26.0" prefWidth="94.0" promptText="000.00" />
       <TextField fx:id="nameAddField" layoutX="235.0" layoutY="30.0" prefHeight="26.0" prefWidth="361.0" promptText="Name..." />
    </children>
 </AnchorPane>
