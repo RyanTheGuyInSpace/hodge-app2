@@ -40,9 +40,6 @@ public class InventoryManagerController implements Initializable {
     public TextField nameAddField;
 
     @FXML
-    public MenuItem addItemButton;
-
-    @FXML
     public MenuItem editItemButton;
 
     @FXML
@@ -89,9 +86,29 @@ public class InventoryManagerController implements Initializable {
 
     Pattern serialNumPattern = Pattern.compile("[a-zA-Z]-\\w\\w\\w-\\w\\w\\w-\\w\\w\\w");
 
+    /**
+     * Checks serialNumberAddField, valueAddField and nameAddField for information and checks it.
+     * If the information passes, a new Inventory item is created and added to the items list.
+     *
+     * -----
+     * Get the text entered into the add fields
+     * Check the inputs to make sure they're valid inputs
+     * Create the InventoryItem using the information gathered from those fields
+     * Add the InventoryItem to the items list
+     * Reselect the Serial Number field
+     * -----
+     */
     public void addItem() {
         String serialNumber = serialNumberAddField.getText().trim();
         float value;
+
+        if (serialNumber.length() > 13) {
+            showError("Not a valid serial number. Please try again.");
+
+            serialNumberAddField.requestFocus();
+
+            return;
+        }
 
         // Validate serialNumber with regex and make sure it doesn't already exist inside the items list
         if (serialNumPattern.matcher(serialNumber).find()) {
@@ -137,9 +154,9 @@ public class InventoryManagerController implements Initializable {
         // All checks have passed. Create the inventory item and add it to the list
         InventoryItem item = new InventoryItem();
 
-        item.editSerialNumber(serialNumber);
-        item.editValue(value);
-        item.editName(name);
+        item.setSerialNumber(serialNumber);
+        item.setValue(value);
+        item.setName(name);
 
         items.add(item);
 
@@ -157,17 +174,19 @@ public class InventoryManagerController implements Initializable {
     public void showError(String errorMessage) {
         Stage window = new Stage();
 
+        // APPLICATION_MODAL will ensure that the popup must be dealt with before continuing
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Error");
 
         VBox layout = new VBox(10);
         layout.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(layout, 250, 100);
+        Scene scene = new Scene(layout, 350, 100);
 
         Label label = new Label(errorMessage);
         label.setAlignment(Pos.CENTER);
 
+        // "Close" button for easy dismissal
         Button button = new Button("Close");
         button.setOnAction(event -> window.close());
         button.setAlignment(Pos.CENTER);
@@ -177,8 +196,34 @@ public class InventoryManagerController implements Initializable {
         window.showAndWait();
     }
 
+    /**
+     * Clears all items from the items list.
+     */
     public void deleteAllItems() {
         items.clear();
+    }
+
+    /**
+     * Finds the currently selected inventory item from the items list and deletes it.
+     * If there is no item currently selected, nothing happens
+     *
+     * -----
+     * Find the currently selected InventoryItem from the itemsTable
+     * If no item is selected, show and error and return
+     * If and item is selected, remove it from the items list
+     * -----
+     */
+    public void deleteItem() {
+
+        InventoryItem item = itemsTable.getSelectionModel().getSelectedItem();
+
+        if (item == null) {
+            showError("No item selected. Please select an item and try again.");
+
+            return;
+        }
+
+        items.remove(item);
     }
 
     @Override
@@ -190,9 +235,9 @@ public class InventoryManagerController implements Initializable {
 
         InventoryItem item = new InventoryItem();
 
-        item.editName("Test Item 1");
-        item.editValue((float)500);
-        item.editSerialNumber("A-123-456-789");
+        item.setName("Test Item 1");
+        item.setValue((float)500);
+        item.setSerialNumber("A-123-456-789");
 
         items.add(item);
 

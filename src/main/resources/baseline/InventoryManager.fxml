@@ -22,9 +22,8 @@
           </Menu>
           <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
             <items>
-                  <MenuItem fx:id="addItemButton" mnemonicParsing="false" onAction="#addItem" text="Add Item" />
                   <MenuItem fx:id="editItemButton" mnemonicParsing="false" text="Edit Item" />
-              <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" text="Delete Item" />
+              <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" onAction="#deleteItem" text="Delete Item" />
                   <MenuItem fx:id="deleteAllItemsButton" mnemonicParsing="false" onAction="#deleteAllItems" text="Delete All Items" />
             </items>
           </Menu>

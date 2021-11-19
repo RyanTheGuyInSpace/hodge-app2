@@ -24,7 +24,7 @@ public class InventoryItem {
      * Sets the name of the InventoryItem.
      * @param name The new name to set for the InventoryItem.
      */
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -40,7 +40,7 @@ public class InventoryItem {
      * Sets the value of the InventoryItem.
      * @param value The new value to set for the InventoryItem.
      */
-    private void setValue(float value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
@@ -56,53 +56,7 @@ public class InventoryItem {
      * Sets the serial number of the InventoryItem.
      * @param serialNumber The new serial number to set the for InventoryItem.
      */
-    private void setSerialNumber(String serialNumber) {
+    public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
-    }
-
-    /**
-     * Edits the name of the InventoryItem and performs validation for the new name.
-     * @param name The new name to set for the InventoryItem.
-     * @return True if successful, false otherwise
-     */
-    public boolean editName(String name) {
-        if (name.length() < 2 || name.length() > 256) {
-            return false;
-        }
-
-        this.name = name;
-
-        return true;
-    }
-
-    /**
-     * Edits the value of the InventoryItem and performs validation for the new value.
-     * @param value The new value to set for the InventoryItem.
-     * @return True if successful, false otherwise
-     */
-    public boolean editValue(float value) {
-        if (value < 0) {
-            return false;
-        }
-
-        this.value = value;
-
-        return true;
-    }
-
-    /**
-     * Edits the serial number of the InventoryItem and performs validation for the new value.
-     * @param serialNumber The new serial number to set for the InventoryItem.
-     * @return True if successful, false otherwise
-     */
-    public boolean editSerialNumber(String serialNumber) {
-
-        /*
-         * TODO use regex to verify correct serial number format. This method shouldn't need to be moved
-         * since we can cancel the operation and show a popup from the controller if this returns false
-         */
-        this.setSerialNumber(serialNumber);
-
-        return false;
     }
 }
