@@ -15,9 +15,9 @@
           <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
             <items>
               <MenuItem fx:id="newInventoryButton" mnemonicParsing="false" text="New" />
-              <MenuItem fx:id="openInventoryButton" mnemonicParsing="false" text="Open" />
-              <MenuItem fx:id="saveInventoryButton" mnemonicParsing="false" text="Save" />
+              <MenuItem fx:id="openInventoryButton" mnemonicParsing="false" onAction="#openInventory" text="Open" />
               <MenuItem fx:id="saveNewInventoryButton" mnemonicParsing="false" text="Save As..." />
+                  <MenuItem fx:id="exportButton" mnemonicParsing="false" onAction="#exportInventory" text="Export..." />
             </items>
           </Menu>
           <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
@@ -29,14 +29,14 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="itemsTable" accessibleRole="TEXT_FIELD" layoutY="59.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+      <TableView fx:id="itemsTable" accessibleRole="TEXT_FIELD" editable="true" layoutY="59.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
           <columnResizePolicy>
               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
           </columnResizePolicy>
         <columns>
-          <TableColumn fx:id="serialNumColumn" prefWidth="131.20001220703125" text="Serial Number" />
-          <TableColumn fx:id="valueColumn" prefWidth="98.4000244140625" text="Value" />
-            <TableColumn fx:id="nameColumn" prefWidth="368.0" text="Name" />
+          <TableColumn fx:id="serialNumColumn" onEditCommit="#editSerialNumber" prefWidth="131.20001220703125" text="Serial Number" />
+          <TableColumn fx:id="valueColumn" onEditCommit="#editValue" prefWidth="98.4000244140625" text="Value" />
+            <TableColumn fx:id="nameColumn" onEditCommit="#editName" prefWidth="368.0" text="Name" />
         </columns>
       </TableView>
       <TextField fx:id="serialNumberAddField" layoutX="2.0" layoutY="30.0" prefHeight="26.0" prefWidth="126.0" promptText="A-XXX-XXX-XXX" />
