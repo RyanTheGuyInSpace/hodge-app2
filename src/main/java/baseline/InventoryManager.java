@@ -21,14 +21,6 @@ import java.util.List;
 public class InventoryManager {
 
     /**
-     * Creates a new Inventory.
-     * @return The new Inventory.
-     */
-    public static Inventory createInventory() {
-        return new Inventory();
-    }
-
-    /**
      * Loads an existing inventory from a file.
      * @param path The path to the pre-existing Inventory.
      * @param items The ObservableList of InventoryItems to put the read InventoryItem into.

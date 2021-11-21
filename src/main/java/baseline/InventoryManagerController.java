@@ -183,6 +183,12 @@ public class InventoryManagerController implements Initializable {
     /**
      * Shows an error inside a popup using the provided errorMessage.
      * @param errorMessage The message to show inside the popup.
+     *
+     * -----
+     * Create a stage for the window
+     * Add a scene, Label for the error message and button for dismissal
+     * Show the new stage
+     * -----
      */
     public static void showError(String errorMessage) {
         Stage window = new Stage();
@@ -268,7 +274,7 @@ public class InventoryManagerController implements Initializable {
      *
      * -----
      * Use the FileChooser to pick where the file should be exported to
-     *
+     * Once the destination is selected, call the export based on the filetype chosen
      * -----
      */
     public void exportInventory() {
@@ -349,6 +355,16 @@ public class InventoryManagerController implements Initializable {
         });
     }
 
+    /**
+     * Searches for an InventoryItem by serial number or name.
+     *
+     * -----
+     * Get the text inside the search box
+     * Find any InventoryItems whose serial number contains the query and select it
+     * Find any InventoryItems whose name contains the query and select it
+     * If no items are found, show an error indicating that no items were found
+     * -----
+     */
     public void searchItem() {
         String query = searchTextField.getText();
 
@@ -381,6 +397,13 @@ public class InventoryManagerController implements Initializable {
     /**
      * Edits the serialNumber of the currently selected InventoryItem
      * @param inventoryItemStringCellEditEvent The event being fired upon edit commit
+     *
+     * -----
+     * Get the item being edited
+     * Get the new serial number that's trying to be used in the item
+     * Verify the serial number is valid and not a duplicate and set it as the selected item's serial number if it passes
+     * If the serial number exists already or isn't value, show an error and return
+     * -----
      */
     public void editSerialNumber(TableColumn.CellEditEvent<InventoryItem, String> inventoryItemStringCellEditEvent) {
         InventoryItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
@@ -420,6 +443,16 @@ public class InventoryManagerController implements Initializable {
         }
     }
 
+    /**
+     * Edits the value of the currently selected InventoryItem
+     * @param inventoryItemFloatCellEditEvent The event being fired upon edit commit
+     *
+     * -----
+     * Get the item being edited
+     * Get the new value that's trying to be used in the item
+     * If the value isn't valid or is less than 0, show an error and return
+     * -----
+     */
     public void editValue(TableColumn.CellEditEvent<InventoryItem, Float> inventoryItemFloatCellEditEvent) {
         InventoryItem item = itemsTable.getSelectionModel().getSelectedItem();
 
@@ -441,6 +474,16 @@ public class InventoryManagerController implements Initializable {
         itemsTable.refresh();
     }
 
+    /**
+     * Edits the name of the currently selected InventoryItem
+     * @param inventoryItemStringCellEditEvent The event being fired upon edit commit
+     *
+     * -----
+     * Get the item being edited
+     * Get the new name that's trying to be used in the item
+     * If the new name length is less than 2 characters or greater than 256 characters, show an error and return
+     * -----
+     */
     public void editName(TableColumn.CellEditEvent<InventoryItem, String> inventoryItemStringCellEditEvent) {
         InventoryItem item = itemsTable.getSelectionModel().getSelectedItem();
 
@@ -457,6 +500,11 @@ public class InventoryManagerController implements Initializable {
         item.setName(name);
     }
 
+    /**
+     * Sets the static oldValue to whatever value was inside the selected InventoryItem before editing began.
+     * We do this so the value can be pulled when a non-numerical value is used and fails
+     * @param inventoryItemFloatCellEditEvent The event fired when a value starts to be edited
+     */
     public void beginValueEdit(TableColumn.CellEditEvent<InventoryItem, Float> inventoryItemFloatCellEditEvent) {
         oldValue = inventoryItemFloatCellEditEvent.getOldValue();
     }
