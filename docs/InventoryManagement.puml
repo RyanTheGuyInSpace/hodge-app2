@@ -1,22 +1,10 @@
 @startuml
 
 class InventoryManager {
-
-    +createInventory():
     +loadInventory();
-}
-
-class Inventory {
-    -String path;
-    -ObservableList<InventoryItem> inventoryItems;
-
-    +save();
-    +saveAsHtml(String path);
-    +saveAsTsv(String path);
-    +saveAsJson(String path);
-    +addItem(InventoryItem item);
-    +deleteItem(InventoryItem item);
-    +deleteAllItems();
+    +exportToJSON(List<InventoryItem> items, File destinationFile);
+    +exportToHTML(List<InventoryItem> items, File destinationFile);
+    +exportToTSV(List<InventoryItem> items, File destinationFile);
 }
 
 class InventoryItem {
@@ -29,7 +17,7 @@ class InventoryItem {
     +getName();
     +setName(String name);
     +getValue();
-    +setValue(BigDecimal value);
+    +setValue(float value);
 }
 
 @enduml
