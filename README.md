@@ -6,8 +6,8 @@ to the current list.
 
 # Deleting Items
 
-To delete an item, right click any item and select "Delete". To delete all items,
-right click any item and select "Delete All".
+To delete an item, select any item, go to the "Edit" menu item and click "Delete".
+To delete all items, go to the "Edit" menu item and click "Delete All".
 
 # Editing Items
 
