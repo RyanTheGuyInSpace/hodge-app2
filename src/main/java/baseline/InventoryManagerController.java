@@ -34,6 +34,8 @@ public class InventoryManagerController implements Initializable {
 
     ObservableList<InventoryItem> items = FXCollections.observableArrayList();
 
+    private static float oldValue = 0;
+
     @FXML
     public MenuItem exportButton;
 
@@ -139,6 +141,16 @@ public class InventoryManagerController implements Initializable {
 
         try {
             value = Float.parseFloat(valueAddField.getText());
+
+            if (value < 0) {
+                // Show an error and exit
+                showError("Input for \"Value\" is invalid.");
+
+                valueAddField.requestFocus();
+
+                return;
+            }
+
         } catch (Exception e) {
             // Show an error and exit
             showError("Input for \"Value\" is invalid.");
@@ -178,7 +190,7 @@ public class InventoryManagerController implements Initializable {
      * Shows an error inside a popup using the provided errorMessage.
      * @param errorMessage The message to show inside the popup.
      */
-    public void showError(String errorMessage) {
+    public static void showError(String errorMessage) {
         Stage window = new Stage();
 
         // APPLICATION_MODAL will ensure that the popup must be dealt with before continuing
@@ -297,22 +309,6 @@ public class InventoryManagerController implements Initializable {
         }
     }
 
-    /**
-     * Exports the currently listed inventory to an HTML file at a location specified with
-     * the FileChooser.
-     */
-    public void exportToHTML() {
-
-    }
-
-    /**
-     * Exports the currently listed inventory to a TSV file at a location specified with
-     * the FileChooser.
-     */
-    public void exportToTSV() {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -331,7 +327,7 @@ public class InventoryManagerController implements Initializable {
         itemsTable.setItems(items);
 
         serialNumColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new CustomFloatStringConverter()));
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         serialNumberAddField.setOnKeyPressed(event -> {
@@ -396,17 +392,19 @@ public class InventoryManagerController implements Initializable {
     }
 
     public void editValue(TableColumn.CellEditEvent<InventoryItem, Float> inventoryItemFloatCellEditEvent) {
+        InventoryItem item = itemsTable.getSelectionModel().getSelectedItem();
+
         float value;
 
         try {
             value = inventoryItemFloatCellEditEvent.getNewValue();
 
-            InventoryItem item = itemsTable.getSelectionModel().getSelectedItem();
-
             item.setValue(value);
         } catch (Exception e) {
             // Show an error and exit
             showError("Input for \"Value\" is invalid.");
+
+            itemsTable.refresh();
 
             return;
         }
@@ -428,5 +426,29 @@ public class InventoryManagerController implements Initializable {
         }
 
         item.setName(name);
+    }
+
+    public void beginValueEdit(TableColumn.CellEditEvent<InventoryItem, Float> inventoryItemFloatCellEditEvent) {
+        oldValue = inventoryItemFloatCellEditEvent.getOldValue();
+    }
+
+    /**
+     * Custom version of FloatStringConverter where we override the fromString method to not throw an exception when
+     * it fails
+     */
+    public static class CustomFloatStringConverter extends FloatStringConverter {
+
+        private final FloatStringConverter converter = new FloatStringConverter();
+
+        @Override
+        public Float fromString(String string) {
+            try {
+                return converter.fromString(string);
+            } catch (Exception e) {
+                showError("Input for \"Value\" is invalid.");
+            }
+
+            return InventoryManagerController.oldValue;
+        }
     }
 }

@@ -35,7 +35,7 @@
           </columnResizePolicy>
         <columns>
           <TableColumn fx:id="serialNumColumn" onEditCommit="#editSerialNumber" prefWidth="131.20001220703125" text="Serial Number" />
-          <TableColumn fx:id="valueColumn" onEditCommit="#editValue" prefWidth="98.4000244140625" text="Value" />
+          <TableColumn fx:id="valueColumn" onEditCommit="#editValue" onEditStart="#beginValueEdit" prefWidth="98.4000244140625" text="Value" />
             <TableColumn fx:id="nameColumn" onEditCommit="#editName" prefWidth="368.0" text="Name" />
         </columns>
       </TableView>
