@@ -49,7 +49,7 @@ public class InventoryManagerController implements Initializable {
     public TextField nameAddField;
 
     @FXML
-    public MenuItem editItemButton;
+    public TextField searchTextField;
 
     @FXML
     public MenuItem deleteAllItemsButton;
@@ -68,12 +68,6 @@ public class InventoryManagerController implements Initializable {
 
     @FXML
     public MenuItem openInventoryButton;
-
-    @FXML
-    public MenuItem saveInventoryButton;
-
-    @FXML
-    public MenuItem saveNewInventoryButton;
 
     @FXML
     public Menu editMenu;
@@ -347,6 +341,41 @@ public class InventoryManagerController implements Initializable {
                 addItem();
             }
         });
+
+        searchTextField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                searchItem();
+            }
+        });
+    }
+
+    public void searchItem() {
+        String query = searchTextField.getText();
+
+        // If the box is empty, do nothing and just return
+        if (query.isEmpty() || query.isBlank()) {
+            return;
+        }
+
+        itemsTable.getItems().stream().filter(a -> a.getSerialNumber().contains(query)).findAny().ifPresent(
+                a -> {
+                    itemsTable.getSelectionModel().select(a);
+                    itemsTable.scrollTo(a);
+                }
+        );
+
+        itemsTable.getItems().stream().filter(a -> a.getName().contains(query)).findAny().ifPresent(
+                a -> {
+                    itemsTable.getSelectionModel().select(a);
+                    itemsTable.scrollTo(a);
+                }
+        );
+
+        // If no items are found by the given query, show an error
+        if (itemsTable.getItems().stream().filter(a -> a.getSerialNumber().contains(query)).findAny().isEmpty()
+            && itemsTable.getItems().stream().filter(a -> a.getName().contains(query)).findAny().isEmpty()) {
+            showError("No items found");
+        }
     }
 
     /**
